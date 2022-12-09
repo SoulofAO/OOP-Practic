@@ -2,6 +2,7 @@
 from MainClasses.Client import UClient
 from MainClasses.MainHotel import UHotel
 import random
+from MainClasses.Sqlite import DataBase
 
 MainHotel = UHotel()
 
@@ -21,3 +22,7 @@ def SimpleExample():
 
 def PrintAllInfo():
     MainHotel.PrintAllInfo()
+
+def CheckDateBase():
+    DataBase.SaveAll(MainHotel)
+    DataBase.LoadAll()
