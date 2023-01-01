@@ -51,6 +51,12 @@ class UHotelDataBase:
             print(Client[0])
             child = SubElement(root, "Client")
             child.attrib = {"Name": str(Client[0]), "Family": str(Client[1]), "Second_Name":str(Client[2]),"Passport":str(Client[3]),"Comment":str(Client[4])}
+
+        for Client in Clients:
+            print(Client[0])
+            child = SubElement(root, "Client")
+            child.attrib = {"Name": str(Client[0]), "Family": str(Client[1]), "Second_Name": str(Client[2]),
+                            "Passport": str(Client[3]), "Comment": str(Client[4])}
         file = open('Hotel.xml', 'w')
         print(tostring(root))
 
