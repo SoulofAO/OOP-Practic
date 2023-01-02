@@ -5,12 +5,52 @@ from MainClasses.Discount import UDiscount
 
 class UHotel:
     def __init__(self, HotelRooms=[], Bookings=[], Discounts=[], Clients=[]):
-        self.HotelRooms = HotelRooms
-        self.Bookings = Bookings
-        self.Discounts = Discounts
-        self.Clients = Clients
-        self.Parser = UWindowParser("Hotel.xml")
-        self.Parser.ApplyParser(self)
+        self.__HotelRooms = HotelRooms
+        self.__Bookings = Bookings
+        self.__Discounts = Discounts
+        self.__Clients = Clients
+        self.__Parser = UWindowParser("Hotel.xml")
+        self.__Parser.ApplyParser(self)
+
+    @property
+    def HotelRooms(self):
+        return self.__HotelRooms
+
+    @HotelRooms.setter
+    def HotelRooms(self, NewHotelRooms):
+        self.__HotelRooms = NewHotelRooms
+
+    @property
+    def Bookings(self):
+        return self.__Bookings
+
+    @Bookings.setter
+    def Bookings(self, NewBookings):
+        self.__Bookings = NewBookings
+
+    @property
+    def Discounts(self):
+        return self.__Discounts
+
+    @Discounts.setter
+    def Discounts(self, NewDiscounts):
+        self.__Discounts = NewDiscounts
+
+    @property
+    def Clients(self):
+        return self.__Clients
+
+    @Clients.setter
+    def Clients(self, NewClients):
+        self.__Clients = NewClients
+
+    @property
+    def Parser(self):
+        return self.__Parser
+
+    @Parser.setter
+    def Parser(self, NewParser):
+        self.__Parser = NewParser
 
     def TakeOffer(self, Client, MaxNumber, Comfort, Pay, DateOn, DateOff):
         GoodHotelRooms = []

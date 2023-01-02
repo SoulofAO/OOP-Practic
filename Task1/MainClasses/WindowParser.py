@@ -7,13 +7,36 @@ from MainClasses.Booking import UBooking
 
 class UWindowParser:
     def __init__(self, Url):
-        self.Url = Url
+        self.__Url = Url
         try:
-            self.doc = minidom.parse(Url)
-            self.xmlHotel = self.doc.getElementsByTagName("Hotel")[0]
+            self.__doc = minidom.parse(Url)
+            self.__xmlHotel = self.doc.getElementsByTagName("Hotel")[0]
         except:
             pass
 
+    @property
+    def Url(self):
+        return self.__Url
+
+    @Url.setter
+    def Url(self, NewUrl):
+        self.__Url = NewUrl
+
+    @property
+    def doc(self):
+        return self.__doc
+
+    @doc.setter
+    def doc(self, Newdoc):
+        self.__doc = Newdoc
+
+    @property
+    def xmlHotel(self):
+        return self.__xmlHotel
+
+    @xmlHotel.setter
+    def xmlHotel(self, NewxmlHotel):
+        self.__xmlHotel = NewxmlHotel
 
     def GetAsString(self):
         tree = ET.parse(self.Url)

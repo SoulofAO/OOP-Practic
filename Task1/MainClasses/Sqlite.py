@@ -3,8 +3,8 @@ from xml.etree.ElementTree import Element, SubElement, tostring
 
 class UHotelDataBase:
     def __init__(self):
-        self.Connect = sqlite3.connect('DataBaseHotel.db')
-        self.Cursor = self.Connect.cursor()
+        self.__Connect = sqlite3.connect('DataBaseHotel.db')
+        self.__Cursor = self.Connect.cursor()
         self.Cursor.execute("""CREATE TABLE IF NOT EXISTS Clients(
         Name TEXT, 
         Family TEXT,
@@ -26,6 +26,22 @@ class UHotelDataBase:
          Passport TEXT,
          ID TEXT);
          """)
+
+    @property
+    def Connect(self):
+        return self.__Connect
+
+    @Connect.setter
+    def Connect(self, NewConnect):
+        self.__Connect = NewConnect
+
+    @property
+    def Cursor(self):
+        return self.__Cursor
+
+    @Cursor.setter
+    def Cursor(self, NewCursor):
+        self.__Cursor = NewCursor
 
     def SaveAll(self, Hotel):
         self.Cursor.execute('DELETE FROM Clients;',)
@@ -51,12 +67,6 @@ class UHotelDataBase:
             print(Client[0])
             child = SubElement(root, "Client")
             child.attrib = {"Name": str(Client[0]), "Family": str(Client[1]), "Second_Name":str(Client[2]),"Passport":str(Client[3]),"Comment":str(Client[4])}
-
-        for Client in Clients:
-            print(Client[0])
-            child = SubElement(root, "Client")
-            child.attrib = {"Name": str(Client[0]), "Family": str(Client[1]), "Second_Name": str(Client[2]),
-                            "Passport": str(Client[3]), "Comment": str(Client[4])}
         file = open('Hotel.xml', 'w')
         print(tostring(root))
 

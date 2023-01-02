@@ -1,1 +1,8 @@
-b'<Hotel><Client Name="&#1061;&#1086;&#1088;&#1085;" Family="&#1056;&#1086;&#1076;&#1078;&#1077;&#1088;" Second_Name="Atata" Passport="1234231234" Comment="None" /><Client Name="&#1061;&#1086;&#1088;&#1085;" Family="&#1056;&#1086;&#1076;&#1078;&#1077;&#1088;" Second_Name="Atata" Passport="1234231234" Comment="None" /><Client Name="&#1061;&#1086;&#1088;&#1085;" Family="&#1056;&#1086;&#1076;&#1078;&#1077;&#1088;" Second_Name="Atata" Passport="1234231234" Comment="None" /><Client Name="&#1061;&#1086;&#1088;&#1085;" Family="&#1056;&#1086;&#1076;&#1078;&#1077;&#1088;" Second_Name="Atata" Passport="1234231234" Comment="None" /></Hotel>'
+<Hotel>
+ <Client Name="Роджер" Family="Хорн" Second_Name = "Atata" Passport = "1234231234" Comment = "None" />
+ <Client Name="Роджер" Family="Хорн" Second_Name = "Atata" Passport = "1234231234" Comment = "None" />
+
+ <Booking DateOn="01.12.2003" DateOff="02.12.2003" Passport="1234231234" ID="1"/>
+
+ <HotelRoom MaxNumber="2" Comfort ="1" Pay = "1000" ID="1"/>
+</Hotel>
