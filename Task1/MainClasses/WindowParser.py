@@ -4,6 +4,7 @@ import urllib.request
 from MainClasses.Client import UClient
 from MainClasses.HotelRoom import UHotelRoom
 from MainClasses.Booking import UBooking
+from Subsistems.ResiterSubsistem import NameSubsistem
 
 class UWindowParser:
     def __init__(self, Url):
@@ -52,7 +53,6 @@ class UWindowParser:
 
 
     def ApplyParser(self, Hotel):
-        try:
             Clients = self.xmlHotel.getElementsByTagName("Client")
 
             for Client in Clients:
@@ -61,7 +61,8 @@ class UWindowParser:
                 Second_Name = Client.getAttribute("Second_Name")
                 passport = Client.getAttribute("Passport")
                 Comment = Client.getAttribute("Comment")
-                Hotel.Clients.append(UClient(Name, Family, Second_Name, passport, Comment))
+                ID = Client.getAttribute("ID")
+                Hotel.Clients.append(UClient(ID,Hotel,Name, Family, Second_Name, passport, Comment))
             HotelRooms = self.xmlHotel.getElementsByTagName("HotelRoom")
 
             for HotelRoom in HotelRooms:
@@ -69,26 +70,24 @@ class UWindowParser:
                 Comfort = HotelRoom.getAttribute("Comfort")
                 Pay = HotelRoom.getAttribute("Pay")
                 ID = HotelRoom.getAttribute("ID")
-                Hotel.HotelRooms.append(UHotelRoom(MaxNumber, Comfort, Pay, ID))
+                Hotel.HotelRooms.append(UHotelRoom(ID,Hotel,MaxNumber, Comfort, Pay))
             Bookings = self.xmlHotel.getElementsByTagName("Booking")
 
             for Booking in Bookings:
                 DateOn = Booking.getAttribute("DateOn")
                 DateOff = Booking.getAttribute("DateOff")
                 Passport = int(Booking.getAttribute("Passport"))
-
-                Client = Hotel.GetClientByPassport(Passport)
+                ClientID = int(Booking.getAttribute("ClientID"))
+                Client = NameSubsistem.GetReferenceByID("UClient", ClientID)
                 if Client == None:
                     continue
-                ID = int(Booking.getAttribute("ID"))
-                HotelRoom = Hotel.GetRoomByID(ID)
+                HotelRoomID = int(Booking.getAttribute("HotelRoomID"))
+                HotelRoom = NameSubsistem.GetReferenceByID("UHotelRoom", HotelRoomID)
                 if HotelRoom is None:
                     continue
-                Hotel.Bookings.append(UBooking(Client,HotelRoom,DateOn,DateOff))
+                Hotel.Bookings.append(UBooking(-1,Hotel,Client,HotelRoom,DateOn,DateOff))
 
             print("ParserEnd")
-        except:
-            pass
 
     def getElement(self, element):
         return self.getText(element.childNodes)

@@ -1,8 +1,8 @@
 <Hotel>
- <Client Name="Роджер" Family="Хорн" Second_Name = "Atata" Passport = "1234231234" Comment = "None" />
- <Client Name="Роджер" Family="Хорн" Second_Name = "Atata" Passport = "1234231234" Comment = "None" />
+ <Client Name="Роджер" Family="Хорн" Second_Name = "Atata" Passport = "1234231234" Comment = "None" ID = "0"/>
+ <Client Name="Андрей" Family="Васильев" Second_Name = "Дмитриевич" Passport = "1234231234" Comment = "None" ID = "1"/>
 
- <Booking DateOn="01.12.2003" DateOff="02.12.2003" Passport="1234231234" ID="1"/>
+ <Booking DateOn="01.12.2003" DateOff="02.12.2003" Passport="1234231234" HotelRoomID="1" ClientID = "1"/>
 
  <HotelRoom MaxNumber="2" Comfort ="1" Pay = "1000" ID="1"/>
 </Hotel>

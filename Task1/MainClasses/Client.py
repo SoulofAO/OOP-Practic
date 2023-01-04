@@ -1,5 +1,7 @@
-class UClient():
-    def __init__(self, Family="Noname", Name="Nona", Second_Name="Nonameovich", passport=6458203940, Comment="None"):
+from Root.Object import UObject
+class UClient(UObject):
+    def __init__(self, ID = -1, Outer = None, Family="Noname", Name="Nona", Second_Name="Nonameovich", passport=6458203940, Comment="None"):
+        UObject.__init__(self,ID,Outer)
         self.__Name = Name
         self.__Family = Family
         self.__Second_Name = Second_Name

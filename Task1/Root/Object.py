@@ -1,7 +1,11 @@
+from Subsistems.ResiterSubsistem import NameSubsistem
+
 class UObject():
-    def __init__(self):
-        self.__ID = 0
-        self.__Outer = None
+    def __init__(self, ID = -1, Outer = None):
+        if(not NameSubsistem.RegisterNewObject(self,ID)):
+            print("Error: wrong ID")
+        self.__ID = NameSubsistem.GetIDByReference(self)
+        self.__Outer = Outer
 
     @property
     def ID(self):
@@ -18,3 +22,6 @@ class UObject():
     @Outer.setter
     def Outer(self, NewOuter):
         self.__Outer = NewOuter.ref()
+
+    def Print(self):
+        pass

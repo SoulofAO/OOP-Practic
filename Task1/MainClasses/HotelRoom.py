@@ -1,9 +1,10 @@
-class UHotelRoom:
-    def __init__(self, MaxNumber=1, Comfort=1, Pay=1000, ID=0):
+from Root.Object import UObject
+class UHotelRoom(UObject):
+    def __init__(self, ID = -1, Outer = None, MaxNumber=1, Comfort=1, Pay=1000):
+        UObject.__init__(self,ID,Outer)
         self.__MaxNumber = int(MaxNumber)
         self.__Comfort = int(Comfort)
         self.__Pay = int(Pay)
-        self.__ID = int(ID)
 
     @property
     def MaxNumber(self):
@@ -28,14 +29,6 @@ class UHotelRoom:
     @Pay.setter
     def Pay(self, NewPay):
         self.__Pay = NewPay
-
-    @property
-    def ID(self):
-        return self.__ID
-
-    @ID.setter
-    def ID(self, NewID):
-        self.__ID = NewID
 
     def Print(self):
         Text = " HotelRoom number" + str(self.ID) + " Can support only " + str(self.MaxNumber) + " persons, have comfort Star "+ str(self.Comfort) + " and cost only "+str(self.Pay)

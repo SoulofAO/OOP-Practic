@@ -1,3 +1,5 @@
+import weakref
+
 class UNameSubsistem:
     def __init__(self):
         self.RegisterAllObjects = []
@@ -6,30 +8,33 @@ class UNameSubsistem:
         class FRegisterObject:
             def __init__(self,Reference,ID):
                 self.Reference = Reference
-                self.ID = ID
+                self.ID = int(ID)
 
         def __init__(self, ClassName = "Class", RegisterObjects = []):
             self.ClassName= ClassName
             self.RegisterObjects = RegisterObjects
 
-    def RegisterNewCaller(self, Caller = None, ID = -1):
+    def RegisterNewObject(self, Caller = None, ID = -1):
         if(ID==-1):
-            ClassName = type(Caller).__name__()
+            ClassName = Caller.__class__.__name__
             RegisterClass = None
             for LocalRegisterClass in self.RegisterAllObjects:
                 if LocalRegisterClass.ClassName == ClassName:
                     RegisterClass = LocalRegisterClass
             if(not RegisterClass):
-                RegisterClass = self.FRegisterClass(type(Caller).__name__(),[])
+                RegisterClass = self.FRegisterClass(Caller.__class__.__name__,[])
                 self.RegisterAllObjects.append(RegisterClass)
             if(RegisterClass):
-                LastIndex = len(RegisterClass.RegisterObjects)
-                LastID = RegisterClass.RegisterObjects[LastIndex].ID
-                LastID = LastID + 1
-                RegisterClass.RegisterObjects.append(RegisterClass.FRegisterObject(Caller.ref(),LastID))
+                LastIndex = len(RegisterClass.RegisterObjects)-1
+                if(LastIndex==-1):
+                    RegisterClass.RegisterObjects.append(RegisterClass.FRegisterObject(Caller,0))
+                else:
+                    LastID = RegisterClass.RegisterObjects[LastIndex].ID
+                    LastID = LastID + 1
+                    RegisterClass.RegisterObjects.append(RegisterClass.FRegisterObject(Caller,LastID))
             return True
         else:
-            ClassName = type(Caller).__name__()
+            ClassName = Caller.__class__.__name__
             RegisterClass = None
             for LocalRegisterClass in self.RegisterAllObjects:
                 if LocalRegisterClass.ClassName == ClassName:
@@ -39,13 +44,14 @@ class UNameSubsistem:
                             return False
                     break
             if(not RegisterClass):
-                RegisterClass = self.FRegisterClass(type(Caller).__name__(),[])
+                RegisterClass = self.FRegisterClass(Caller.__class__.__name__,[])
                 self.RegisterAllObjects.append(RegisterClass)
             if(RegisterClass):
-                RegisterClass.RegisterObjects.append(RegisterClass.FRegisterObject(Caller.ref(), ID))
+                RegisterClass.RegisterObjects.append(RegisterClass.FRegisterObject(Caller, ID))
+            return True
 
 
-    def GetLinkByID(self,ClassName, ID):
+    def GetReferenceByID(self,ClassName, ID):
         for RegisterClass in self.RegisterAllObjects:
             for LocalRegisterClass in self.RegisterAllObjects:
                 if LocalRegisterClass.ClassName == ClassName:
@@ -54,6 +60,24 @@ class UNameSubsistem:
                         if (RegisterObject.ID == ID):
                             return RegisterObject.Reference
         return None
+
+    def GetIDByReference(self, Reference):
+        ClassName = Reference.__class__.__name__
+        for RegisterClass in self.RegisterAllObjects:
+            for LocalRegisterClass in self.RegisterAllObjects:
+                if LocalRegisterClass.ClassName == ClassName:
+                    RegisterClass = LocalRegisterClass
+                    for RegisterObject in LocalRegisterClass.RegisterObjects:
+                        if (RegisterObject.Reference == Reference):
+                            return RegisterObject.ID
+
+    def GetAllReferenceByOuter(self,Outer, ClassSort = ""):
+        ReferenceArray = []
+        for RegisterClass in self.RegisterAllObjects:
+            for RegisterObject in RegisterClass.RegisterObjects:
+                if(Outer==RegisterObject.Reference.Outer):
+                    ReferenceArray.append(RegisterObject.Reference.Outer)
+
 
 NameSubsistem = UNameSubsistem()
 
