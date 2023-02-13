@@ -14,11 +14,13 @@ def PrintOffer(GoodHotelRoomsResult):
 
 
 def SimpleExample():
-    BrejnevClient = UClient("Brejnev", "Leonid", "Ivanovich", Comment="Medalist")
+    BrejnevClient = UClient(-1,None,"Brejnev", "Leonid", "Ivanovich", Comment="Medalist")
+    MainHotel.Clients.append(BrejnevClient)
     HotelRoomOffer = MainHotel.TakeOffer(BrejnevClient, 1, 3, 1000000, "0.0.2", "0.0.5")
     PrintOffer(HotelRoomOffer)
     if(len(HotelRoomOffer)>0):
         HotelChoise = HotelRoomOffer[random.randint(0, len(HotelRoomOffer) - 1)]
+    print(BrejnevClient.Print())
 
 def PrintAllInfo():
     MainHotel.PrintAllInfo()
@@ -26,3 +28,5 @@ def PrintAllInfo():
 def CheckDateBase():
     DataBase.SaveAll(MainHotel)
     DataBase.LoadAll()
+def SaveAll():
+    DataBase.SaveAll(MainHotel)

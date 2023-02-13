@@ -47,15 +47,20 @@ class UHotelDataBase:
 
     def SaveAll(self, Hotel):
         self.Cursor.execute('DELETE FROM Clients;',)
+        self.Connect.commit()
         self.Cursor.execute('DELETE FROM HotelRooms;', )
+        self.Connect.commit()
         self.Cursor.execute('DELETE FROM Bookings;', )
+        self.Connect.commit()
 
         for Client in Hotel.Clients:
             LocalClient = (Client.Name, Client.Family, Client.Second_Name, Client.passport, Client.Comment, Client.ID)
             self.Cursor.execute("INSERT INTO Clients VALUES(?, ?, ?, ?, ?, ?);",  LocalClient)
+            self.Connect.commit()
         for Room in Hotel.HotelRooms:
             LocalHotel = (Room.MaxNumber, Room.Comfort, Room.Pay, Room.ID)
             self.Cursor.execute("INSERT INTO HotelRooms VALUES(?, ?, ?, ?);", LocalHotel)
+            self.Connect.commit()
         for Booking in Hotel.Bookings:
             Passport = Booking.Client.passport
             ID = Booking.HotelRoom.ID
@@ -63,6 +68,7 @@ class UHotelDataBase:
             HotelRoomID = NameSubsistem.GetIDByReference(Booking.HotelRoom)
             LocalBooking=(Booking.DateOn, Booking.DateOff, Passport, ClientID, HotelRoomID)
             self.Cursor.execute("INSERT INTO Bookings VALUES(?, ?, ?, ?, ?);", LocalBooking)
+            self.Connect.commit()
     def LoadAll(self):
         root = Element('Hotel')
         self.Cursor.execute("SELECT * FROM Clients;")
