@@ -7,3 +7,4 @@ class UObject():
     def SetID(self,ID):
         self.ID = ID
     def GetClassName(self):
+        pass
