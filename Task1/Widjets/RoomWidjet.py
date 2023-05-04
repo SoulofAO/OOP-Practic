@@ -10,21 +10,32 @@ from Widjets.EditClassWidjet import UEditClassWidjet
 
 
 class URoomWidjet(UEditClassWidjet):
+    def handle_cell_clicked(self, row, col):
+        MaxNumber = self.TableWidjetClients.item(row,0).text()
+        Comfort = self.TableWidjetClients.item(row,1).text()
+        Pay = self.TableWidjetClients.item(row,2).text()
+        self.LastSaveID = int(self.TableWidjetClients.item(row, 3).text())
+        self.WTextMaxNumberEdit.setText(MaxNumber)
+        self.WTextComfortEdit.setText(Comfort)
+        self.WTextPayEdit.setText(Pay)
+
+
     def InitUI(self):
         super().InitUI()
-        TableWidjetClients = QtWidgets.QTableWidget()
+        self.TableWidjetClients = QtWidgets.QTableWidget()
         RoomsArray = NameSubsistem.GetReferencesByClass("UHotelRoom")
-        TableWidjetClients.setRowCount(len(RoomsArray))
-        TableWidjetClients.setColumnCount(3)
-        self.MainLayout.addWidget(TableWidjetClients)
+        self.TableWidjetClients.setRowCount(len(RoomsArray))
+        self.TableWidjetClients.setColumnCount(4)
+        self.MainLayout.addWidget(self.TableWidjetClients)
         c = 0
         for x in RoomsArray:
-            TableWidjetClients.setItem(c,0,QTableWidgetItem(str(x.MaxNumber)))
-            TableWidjetClients.setItem(c,1, QTableWidgetItem(str(x.Comfort)))
-            TableWidjetClients.setItem(c,2, QTableWidgetItem(str(x.Pay)))
+            self.TableWidjetClients.setItem(c,0,QTableWidgetItem(str(x.MaxNumber)))
+            self.TableWidjetClients.setItem(c,1, QTableWidgetItem(str(x.Comfort)))
+            self.TableWidjetClients.setItem(c,2, QTableWidgetItem(str(x.Pay)))
+            self.TableWidjetClients.setItem(c,3, QTableWidgetItem(str(x.ID)))
             c=c+1
-        TableWidjetClients.setHorizontalHeaderLabels(("MaxNumber","Comfort","Pay"))
-
+        self.TableWidjetClients.setHorizontalHeaderLabels(("MaxNumber","Comfort","Pay","ID"))
+        self.TableWidjetClients.cellClicked.connect(self.handle_cell_clicked)
 
         GridLayout = QGridLayout()
         self.MainLayout.addLayout(GridLayout)

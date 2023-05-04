@@ -1,5 +1,5 @@
 import sys
-from PyQt5.QtWidgets import QMainWindow, QTextEdit, QAction, QApplication, QGridLayout, QTableWidgetItem
+from PyQt5.QtWidgets import QMainWindow, QTextEdit, QAction, QApplication, QGridLayout, QTableWidgetItem, QMessageBox
 from PyQt5.QtGui import QIcon
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import (QWidget, QPushButton,
@@ -12,27 +12,40 @@ from Widjets.EditClassWidjet import UEditClassWidjet
 class UBookingWidjet(UEditClassWidjet):
     def __init__(self):
         super().__init__()
-        self.WTextDateOnEdit = None
-        self.WTextDateOn = None
+    def handle_cell_clicked(self, row, col):
+        ClientID = self.TableWidjetClients.item(row,0).text()
+        HotelRoomID = self.TableWidjetClients.item(row,1).text()
+        DateOn = self.TableWidjetClients.item(row,2).text()
+        DateOff = self.TableWidjetClients.item(row, 3).text()
+        Comment = self.TableWidjetClients.item(row, 4).text()
+        self.LastSaveID = int(self.TableWidjetClients.item(row, 5).text())
+
+        self.WClientIDEdit.setText(ClientID)
+        self.WTextHotelRoomEdit.setText(HotelRoomID)
+        self.WTextDateOnEdit.setText(DateOn)
+        self.WTextDateOffEdit.setText(DateOff)
+        self.WTextCommentEdit.setText(Comment)
 
     def InitUI(self):
         super().InitUI()
-        TableWidjetClients = QtWidgets.QTableWidget()
+        self.TableWidjetClients = QtWidgets.QTableWidget()
         ClientsArray = NameSubsistem.GetReferencesByClass("UBooking")
-        TableWidjetClients.setRowCount(len(ClientsArray))
-        TableWidjetClients.setColumnCount(5)
-        self.MainLayout.addWidget(TableWidjetClients)
+        self.TableWidjetClients.setRowCount(len(ClientsArray))
+        self.TableWidjetClients.setColumnCount(6)
+        self.MainLayout.addWidget(self.TableWidjetClients)
         c = 0
         for x in ClientsArray:
             ClientID = NameSubsistem.GetIDByReference(x.Client)
             HotelRoomID = NameSubsistem.GetIDByReference(x.HotelRoom)
-            TableWidjetClients.setItem(c,0,QTableWidgetItem(str(ClientID)))
-            TableWidjetClients.setItem(c,1, QTableWidgetItem(str(HotelRoomID)))
-            TableWidjetClients.setItem(c,2, QTableWidgetItem(x.DateOn))
-            TableWidjetClients.setItem(c,3, QTableWidgetItem(x.DateOff))
-            TableWidjetClients.setItem(c,4, QTableWidgetItem(x.Comment))
+            self.TableWidjetClients.setItem(c,0,QTableWidgetItem(str(ClientID)))
+            self.TableWidjetClients.setItem(c,1, QTableWidgetItem(str(HotelRoomID)))
+            self.TableWidjetClients.setItem(c,2, QTableWidgetItem(x.DateOn))
+            self.TableWidjetClients.setItem(c,3, QTableWidgetItem(x.DateOff))
+            self.TableWidjetClients.setItem(c,4, QTableWidgetItem(x.Comment))
+            self.TableWidjetClients.setItem(c,5, QTableWidgetItem(str(x.ID)))
             c=c+1
-        TableWidjetClients.setHorizontalHeaderLabels(("ClientID","HotelRoomID","DateOn","DateOff","Comment"))
+        self.TableWidjetClients.setHorizontalHeaderLabels(("ClientID","HotelRoomID","DateOn","DateOff","Comment","ID"))
+        self.TableWidjetClients.cellClicked.connect(self.handle_cell_clicked)
 
         GridLayout = QGridLayout()
         self.MainLayout.addLayout(GridLayout)

@@ -19,6 +19,15 @@ class UMainAppWidjet(QMainWindow):
         self.ShowClientWidjet = None
         self.initUI()
 
+    def SaveButtonHandle(self):
+        CurrentTab = self.MiddleTabs.currentWidget()
+        CurrentTab.Save()
+    def AddButtonHandle(self):
+        CurrentTab = self.MiddleTabs.currentWidget()
+        CurrentTab.AddNew()
+    def RemoveButtonHandle(self):
+        CurrentTab = self.MiddleTabs.currentWidget()
+        CurrentTab.Remove()
 
     def initUI(self):
 
@@ -44,24 +53,28 @@ class UMainAppWidjet(QMainWindow):
         MiddelHLayout = QHBoxLayout()
         GlobalLayout.addLayout(MiddelHLayout)
 
-        MiddleTabs = QTabWidget()
-        MiddelHLayout.addWidget(MiddleTabs)
+        self.MiddleTabs = QTabWidget()
+        MiddelHLayout.addWidget(self.MiddleTabs)
 
         self.ShowClientWidjet = UClientWidjet()
         self.ShowBookingWidjet = UBookingWidjet()
         self.ShowRoomWidjet = URoomWidjet()
-        MiddleTabs.addTab(self.ShowClientWidjet, "Clients")
-        MiddleTabs.addTab(self.ShowBookingWidjet, "Bookings")
-        MiddleTabs.addTab(self.ShowRoomWidjet, "Rooms")
+        self.MiddleTabs.addTab(self.ShowClientWidjet, "Clients")
+        self.MiddleTabs.addTab(self.ShowBookingWidjet, "Bookings")
+        self.MiddleTabs.addTab(self.ShowRoomWidjet, "Rooms")
 
         ButtonTaskLayout = QVBoxLayout()
         MiddelHLayout.addLayout(ButtonTaskLayout)
 
         self.PushAddButton = QPushButton("Add")
-        self.PushChangeButton = QPushButton("Change")
+        self.PushAddButton.clicked.connect(self.AddButtonHandle())
+        self.PushSaveButton = QPushButton("Change")
+        self.PushSaveButton.clicked.connect(self.SaveButtonHandle())
         self.DeleteButton = QPushButton("Delete")
+        self.DeleteButton.clicked.connect(self.RemoveButtonHandle())
+
         ButtonTaskLayout.addWidget(self.PushAddButton)
-        ButtonTaskLayout.addWidget(self.PushChangeButton)
+        ButtonTaskLayout.addWidget(self.PushSaveButton)
         ButtonTaskLayout.addWidget(self.DeleteButton)
 
 

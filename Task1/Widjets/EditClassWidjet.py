@@ -12,10 +12,19 @@ class UEditClassWidjet(QWidget):
         super().__init__()
         self.MainLayout = None
         self.InitUI()
+        self.LastSaveID = 0
 
+    def handle_cell_clicked(self, row, col):
+        pass
     def InitUI(self):
         self.MainLayout = QVBoxLayout()
         self.setLayout(self.MainLayout)
+    def AddNew(self):
+        pass
+    def Save(self):
+        pass
+    def Remove(self):
+        pass
 
 
 

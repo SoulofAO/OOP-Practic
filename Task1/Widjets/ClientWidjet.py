@@ -7,25 +7,39 @@ from PyQt5.QtWidgets import (QWidget, QPushButton,
 from PyQt5.QtCore import pyqtSlot
 from Subsistems.ResiterSubsistem import NameSubsistem
 from Widjets.EditClassWidjet import UEditClassWidjet
-
+from MainClasses.Client import UClient
 
 class UClientWidjet(UEditClassWidjet):
+    def handle_cell_clicked(self, row, col):
+        Name = self.TableWidjetClients.item(row,0).text()
+        Family = self.TableWidjetClients.item(row,1).text()
+        Second_Name = self.TableWidjetClients.item(row,2).text()
+        passport = self.TableWidjetClients.item(row, 3).text()
+        Comment = self.TableWidjetClients.item(row, 4).text()
+        self.LastSaveID = int(self.TableWidjetClients.item(row, 5).text())
+        self.WTextNameEdit.setText(Name)
+        self.WTextFamilyEdit.setText(Family)
+        self.WTextSecondNameEdit.setText(Second_Name)
+        self.WTextPassportEdit.setText(passport)
+        self.WTextCommentEdit.setText(Comment)
     def InitUI(self):
         super().InitUI()
-        TableWidjetClients = QtWidgets.QTableWidget()
+        self.TableWidjetClients = QtWidgets.QTableWidget()
         ClientsArray = NameSubsistem.GetReferencesByClass("UClient")
-        TableWidjetClients.setRowCount(len(ClientsArray))
-        TableWidjetClients.setColumnCount(5)
-        self.MainLayout.addWidget(TableWidjetClients)
+        self.TableWidjetClients.setRowCount(len(ClientsArray))
+        self.TableWidjetClients.setColumnCount(6)
+        self.MainLayout.addWidget(self.TableWidjetClients)
         c = 0
         for x in ClientsArray:
-            TableWidjetClients.setItem(c,0, QTableWidgetItem(x.Name))
-            TableWidjetClients.setItem(c,1, QTableWidgetItem(x.Family))
-            TableWidjetClients.setItem(c,2, QTableWidgetItem(x.Second_Name))
-            TableWidjetClients.setItem(c,3, QTableWidgetItem(str(x.passport)))
-            TableWidjetClients.setItem(c,4, QTableWidgetItem(x.Comment))
+            self.TableWidjetClients.setItem(c,0, QTableWidgetItem(x.Name))
+            self.TableWidjetClients.setItem(c,1, QTableWidgetItem(x.Family))
+            self.TableWidjetClients.setItem(c,2, QTableWidgetItem(x.Second_Name))
+            self.TableWidjetClients.setItem(c,3, QTableWidgetItem(str(x.passport)))
+            self.TableWidjetClients.setItem(c,4, QTableWidgetItem(x.Comment))
+            self.TableWidjetClients.setItem(c,5, QTableWidgetItem(str(x.ID)))
             c=c+1
-        TableWidjetClients.setHorizontalHeaderLabels(("Name","Family","Second_Name","passport","Comment"))
+        self.TableWidjetClients.setHorizontalHeaderLabels(("Name","Family","Second_Name","passport","Comment","ID"))
+        self.TableWidjetClients.cellClicked.connect(self.handle_cell_clicked)
 
         GridLayout = QGridLayout()
         self.MainLayout.addLayout(GridLayout)
@@ -42,8 +56,8 @@ class UClientWidjet(UEditClassWidjet):
 
         self.WTextSecondName = QLabel("SecondName")
         self.WTextSecondNameEdit = QTextEdit()
-        GridLayout.addWidget(self.WTextFamily,2,0)
-        GridLayout.addWidget(self.WTextFamilyEdit,2,1)
+        GridLayout.addWidget(self.WTextSecondName,2,0)
+        GridLayout.addWidget(self.WTextSecondNameEdit,2,1)
 
         self.WTextPassport = QLabel("Passport")
         self.WTextPassportEdit = QTextEdit()
@@ -54,6 +68,26 @@ class UClientWidjet(UEditClassWidjet):
         self.WTextCommentEdit = QTextEdit()
         GridLayout.addWidget(self.WTextComment,4,0)
         GridLayout.addWidget(self.WTextCommentEdit,4,1)
+    def AddNew(self):
+        Name = self.WTextNameEdit.textChanged
+        Family = self.WTextFamilyEdit.textChanged
+        Second_Name = self.WTextSecondNameEdit.textChanged
+        passport = self.WTextPassportEdit.textChanged
+        Comment = self.WTextCommentEdit.textChanged
+        Client = UClient(Name,Family,Second_Name,passport,Comment)
+    def Save(self):
+        Name = self.WTextNameEdit.textChanged
+        Family = self.WTextFamilyEdit.textChanged
+        Second_Name = self.WTextSecondNameEdit.textChanged
+        passport = self.WTextPassportEdit.textChanged
+        Comment = self.WTextCommentEdit.textChanged
+        Client = NameSubsistem.GetReferenceByID("UClient",self.LastSaveID)
+        Client.Name = Name
+        Client.Family = Family
+        Client.Second_Name = Second_Name
+        Client.passport = passport
+        Client.Comment = Comment
+
 
 if __name__ == '__main__':
 
