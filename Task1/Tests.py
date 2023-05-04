@@ -1,8 +1,12 @@
+import sys
+
+from PyQt5.QtWidgets import QApplication
 
 from MainClasses.Client import UClient
 from MainClasses.MainHotel import UHotel
 import random
 from MainClasses.Sqlite import DataBase
+from Widjets.MainWidjet import UMainAppWidjet
 
 MainHotel = UHotel()
 
@@ -24,6 +28,9 @@ def SimpleExample():
 
 def PrintAllInfo():
     MainHotel.PrintAllInfo()
+    app = QApplication(sys.argv)
+    ex = UMainAppWidjet()
+    sys.exit(app.exec_())
 
 def CheckDateBase():
     DataBase.SaveAll(MainHotel)

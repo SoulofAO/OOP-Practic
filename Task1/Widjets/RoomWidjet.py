@@ -1,5 +1,5 @@
 import sys
-from PyQt5.QtWidgets import QMainWindow, QTextEdit, QAction, QApplication, QGridLayout
+from PyQt5.QtWidgets import QMainWindow, QTextEdit, QAction, QApplication, QGridLayout, QTableWidgetItem
 from PyQt5.QtGui import QIcon
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import (QWidget, QPushButton,
@@ -19,9 +19,9 @@ class URoomWidjet(UEditClassWidjet):
         self.MainLayout.addWidget(TableWidjetClients)
         c = 0
         for x in RoomsArray:
-            TableWidjetClients.setItem(0,c,x.MaxNumber)
-            TableWidjetClients.setItem(1, c, x.Comfort)
-            TableWidjetClients.setItem(2, c, x.Pay)
+            TableWidjetClients.setItem(c,0,QTableWidgetItem(str(x.MaxNumber)))
+            TableWidjetClients.setItem(c,1, QTableWidgetItem(str(x.Comfort)))
+            TableWidjetClients.setItem(c,2, QTableWidgetItem(str(x.Pay)))
             c=c+1
         TableWidjetClients.setHorizontalHeaderLabels(("MaxNumber","Comfort","Pay"))
 

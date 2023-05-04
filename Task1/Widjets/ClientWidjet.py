@@ -1,5 +1,5 @@
 import sys
-from PyQt5.QtWidgets import QMainWindow, QTextEdit, QAction, QApplication, QGridLayout
+from PyQt5.QtWidgets import QMainWindow, QTextEdit, QAction, QApplication, QGridLayout, QTableWidgetItem
 from PyQt5.QtGui import QIcon
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import (QWidget, QPushButton,
@@ -19,11 +19,11 @@ class UClientWidjet(UEditClassWidjet):
         self.MainLayout.addWidget(TableWidjetClients)
         c = 0
         for x in ClientsArray:
-            TableWidjetClients.setItem(0,c,x.Name)
-            TableWidjetClients.setItem(1, c, x.Family)
-            TableWidjetClients.setItem(2, c, x.Second_Name)
-            TableWidjetClients.setItem(3, c, x.passport)
-            TableWidjetClients.setItem(4, c, x.Comment)
+            TableWidjetClients.setItem(c,0, QTableWidgetItem(x.Name))
+            TableWidjetClients.setItem(c,1, QTableWidgetItem(x.Family))
+            TableWidjetClients.setItem(c,2, QTableWidgetItem(x.Second_Name))
+            TableWidjetClients.setItem(c,3, QTableWidgetItem(str(x.passport)))
+            TableWidjetClients.setItem(c,4, QTableWidgetItem(x.Comment))
             c=c+1
         TableWidjetClients.setHorizontalHeaderLabels(("Name","Family","Second_Name","passport","Comment"))
 

@@ -1,7 +1,7 @@
 from MainClasses.WindowParser import UWindowParser
 from MainClasses.Booking import UBooking
 from MainClasses.Discount import UDiscount
-
+from Widjets.MainWidjet import UMainAppWidjet
 
 class UHotel:
     def __init__(self, HotelRooms=[], Bookings=[], Discounts=[], Clients=[]):

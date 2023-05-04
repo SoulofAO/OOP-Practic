@@ -1,5 +1,5 @@
 import sys
-from PyQt5.QtWidgets import QMainWindow, QTextEdit, QAction, QApplication, QGridLayout
+from PyQt5.QtWidgets import QMainWindow, QTextEdit, QAction, QApplication, QGridLayout, QTableWidgetItem
 from PyQt5.QtGui import QIcon
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import (QWidget, QPushButton,
@@ -26,11 +26,11 @@ class UBookingWidjet(UEditClassWidjet):
         for x in ClientsArray:
             ClientID = NameSubsistem.GetIDByReference(x.Client)
             HotelRoomID = NameSubsistem.GetIDByReference(x.HotelRoom)
-            TableWidjetClients.setItem(0,c,ClientID)
-            TableWidjetClients.setItem(1, c, HotelRoomID)
-            TableWidjetClients.setItem(2, c, x.DateOn)
-            TableWidjetClients.setItem(3, c, x.DateOff)
-            TableWidjetClients.setItem(4, c, x.Comment)
+            TableWidjetClients.setItem(c,0,QTableWidgetItem(str(ClientID)))
+            TableWidjetClients.setItem(c,1, QTableWidgetItem(str(HotelRoomID)))
+            TableWidjetClients.setItem(c,2, QTableWidgetItem(x.DateOn))
+            TableWidjetClients.setItem(c,3, QTableWidgetItem(x.DateOff))
+            TableWidjetClients.setItem(c,4, QTableWidgetItem(x.Comment))
             c=c+1
         TableWidjetClients.setHorizontalHeaderLabels(("ClientID","HotelRoomID","DateOn","DateOff","Comment"))
 

@@ -52,34 +52,31 @@ class UNameSubsistem:
 
 
     def GetReferenceByID(self,ClassName, ID):
-        for RegisterClass in self.RegisterAllObjects:
-            for LocalRegisterClass in self.RegisterAllObjects:
-                if LocalRegisterClass.ClassName == ClassName:
-                    RegisterClass = LocalRegisterClass
-                    for RegisterObject in LocalRegisterClass.RegisterObjects:
-                        if (RegisterObject.ID == ID):
-                            return RegisterObject.Reference
+        for LocalRegisterClass in self.RegisterAllObjects:
+            if LocalRegisterClass.ClassName == ClassName:
+                RegisterClass = LocalRegisterClass
+                for RegisterObject in LocalRegisterClass.RegisterObjects:
+                    if (RegisterObject.ID == ID):
+                        return RegisterObject.Reference
         return None
 
     def GetReferencesByClass(self,ClassName):
         ReturnArray = []
-        for RegisterClass in self.RegisterAllObjects:
-            for LocalRegisterClass in self.RegisterAllObjects:
-                if LocalRegisterClass.ClassName == ClassName:
-                    RegisterClass = LocalRegisterClass
-                    for RegisterObject in LocalRegisterClass.RegisterObjects:
-                        ReturnArray.append(RegisterObject.Reference)
+        for LocalRegisterClass in self.RegisterAllObjects:
+             if LocalRegisterClass.ClassName == ClassName:
+                RegisterClass = LocalRegisterClass
+                for RegisterObject in LocalRegisterClass.RegisterObjects:
+                    ReturnArray.append(RegisterObject.Reference)
         return ReturnArray
 
     def GetIDByReference(self, Reference):
         ClassName = Reference.__class__.__name__
-        for RegisterClass in self.RegisterAllObjects:
-            for LocalRegisterClass in self.RegisterAllObjects:
-                if LocalRegisterClass.ClassName == ClassName:
-                    RegisterClass = LocalRegisterClass
-                    for RegisterObject in LocalRegisterClass.RegisterObjects:
-                        if (RegisterObject.Reference == Reference):
-                            return RegisterObject.ID
+        for LocalRegisterClass in self.RegisterAllObjects:
+            if LocalRegisterClass.ClassName == ClassName:
+                RegisterClass = LocalRegisterClass
+                for RegisterObject in LocalRegisterClass.RegisterObjects:
+                    if (RegisterObject.Reference == Reference):
+                          return RegisterObject.ID
 
     def GetAllReferenceByOuter(self,Outer, ClassSort = ""):
         ReferenceArray = []
