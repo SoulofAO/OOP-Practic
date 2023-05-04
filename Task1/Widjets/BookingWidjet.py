@@ -1,5 +1,5 @@
 import sys
-from PyQt5.QtWidgets import QMainWindow, QTextEdit, QAction, QApplication
+from PyQt5.QtWidgets import QMainWindow, QTextEdit, QAction, QApplication, QGridLayout
 from PyQt5.QtGui import QIcon
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import (QWidget, QPushButton,
@@ -12,64 +12,52 @@ from Widjets.EditClassWidjet import UEditClassWidjet
 class UBookingWidjet(UEditClassWidjet):
     def __init__(self):
         super().__init__()
-        self.initUI()
+        self.WTextDateOnEdit = None
+        self.WTextDateOn = None
+
     def InitUI(self):
+        super().InitUI()
         TableWidjetClients = QtWidgets.QTableWidget()
-        ClientsArray = NameSubsistem.GetReferencesByClass("UClient")
+        ClientsArray = NameSubsistem.GetReferencesByClass("UBooking")
         TableWidjetClients.setRowCount(len(ClientsArray))
         TableWidjetClients.setColumnCount(5)
         self.MainLayout.addWidget(TableWidjetClients)
         c = 0
         for x in ClientsArray:
-            TableWidjetClients.setItem(0,c,x.Name)
-            TableWidjetClients.setItem(1, c, x.Family)
-            TableWidjetClients.setItem(2, c, x.Second_Name)
-            TableWidjetClients.setItem(3, c, x.passport)
+            ClientID = NameSubsistem.GetIDByReference(x.Client)
+            HotelRoomID = NameSubsistem.GetIDByReference(x.HotelRoom)
+            TableWidjetClients.setItem(0,c,ClientID)
+            TableWidjetClients.setItem(1, c, HotelRoomID)
+            TableWidjetClients.setItem(2, c, x.DateOn)
+            TableWidjetClients.setItem(3, c, x.DateOff)
             TableWidjetClients.setItem(4, c, x.Comment)
             c=c+1
-        TableWidjetClients.setHorizontalHeaderLabels(("Name","Family","Second_Name","passport","Comment"))
+        TableWidjetClients.setHorizontalHeaderLabels(("ClientID","HotelRoomID","DateOn","DateOff","Comment"))
 
-        BottomLayout = QVBoxLayout()
-        self.MainLayout.addWidget(BottomLayout)
+        GridLayout = QGridLayout()
+        self.MainLayout.addLayout(GridLayout)
 
-        WHList = QHBoxLayout()
-        self.WTextName = QLabel("Name")
-        self.WTextNameEdit = QTextEdit()
-        WHList.addWidget(self.WTextName)
-        WHList.addWidget(self.WTextNameEdit)
-        BottomLayout.addLayout(WHList)
+        self.WClientID = QLabel("ClientID")
+        self.WClientIDEdit = QTextEdit()
+        GridLayout.addWidget(self.WClientID,0,0)
+        GridLayout.addWidget(self.WClientIDEdit,0,1)
 
-        WHList = QHBoxLayout()
-        self.WTextFamily = QLabel("Family")
-        self.WTextFamilyEdit = QTextEdit()
-        WHList.addWidget(self.WTextFamily)
-        WHList.addWidget(self.WTextFamilyEdit)
-        BottomLayout.addLayout(WHList)
+        self.WTextHotelRoom = QLabel("HotelRoomID")
+        self.WTextHotelRoomEdit = QTextEdit()
+        GridLayout.addWidget(self.WTextHotelRoom,1,0)
+        GridLayout.addWidget(self.WTextHotelRoomEdit,1,1)
 
-        WHList = QHBoxLayout()
-        self.WTextSecondName = QLabel("SecondName")
-        self.WTextSecondNameEdit = QTextEdit()
-        WHList.addWidget(self.WTextFamily)
-        WHList.addWidget(self.WTextFamilyEdit)
-        BottomLayout.addLayout(WHList)
+        self.WTextDateOn = QLabel("DateOn")
+        self.WTextDateOnEdit = QTextEdit()
+        GridLayout.addWidget(self.WTextDateOn,2,0)
+        GridLayout.addWidget(self.WTextDateOnEdit,2,1)
 
-        WHList = QHBoxLayout()
-        self.WTextSecondName = QLabel("SecondName")
-        self.WTextSecondNameEdit = QTextEdit()
-        WHList.addWidget(self.WTextSecondName)
-        WHList.addWidget(self.WTextSecondNameEdit)
-        BottomLayout.addLayout(WHList)
+        self.WTextDateOff = QLabel("DateOff")
+        self.WTextDateOffEdit = QTextEdit()
+        GridLayout.addWidget(self.WTextDateOff,3,0)
+        GridLayout.addWidget(self.WTextDateOffEdit,3,1)
 
-        WHList = QHBoxLayout()
-        self.WTextPassport = QLabel("Passport")
-        self.WTextPassportEdit = QTextEdit()
-        WHList.addWidget(self.WTextPassport)
-        WHList.addWidget(self.WTextPassportEdit)
-        BottomLayout.addLayout(WHList)
-
-        WHList = QHBoxLayout()
         self.WTextComment = QLabel("Comment")
         self.WTextCommentEdit = QTextEdit()
-        WHList.addWidget(self.WTextComment)
-        WHList.addWidget(self.WTextCommentEdit)
-        BottomLayout.addLayout(WHList)
+        GridLayout.addWidget(self.WTextComment,4,0)
+        GridLayout.addWidget(self.WTextCommentEdit,4,1)

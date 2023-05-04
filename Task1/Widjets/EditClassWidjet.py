@@ -10,10 +10,12 @@ from Subsistems.ResiterSubsistem import NameSubsistem
 class UEditClassWidjet(QWidget):
     def __init__(self):
         super().__init__()
-        self.initUI()
+        self.MainLayout = None
+        self.InitUI()
 
     def InitUI(self):
         self.MainLayout = QVBoxLayout()
+        self.setLayout(self.MainLayout)
 
 
 
