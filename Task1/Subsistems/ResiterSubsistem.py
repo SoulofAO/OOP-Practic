@@ -84,15 +84,21 @@ class UNameSubsistem:
             for RegisterObject in RegisterClass.RegisterObjects:
                 if(Outer==RegisterObject.Reference.Outer):
                     ReferenceArray.append(RegisterObject.Reference.Outer)
-    def RemoveObject(self,Reference):
+    def DeleteObject(self,Reference):
         ClassName = Reference.__class__.__name__
         for LocalRegisterClass in self.RegisterAllObjects:
             if LocalRegisterClass.ClassName == ClassName:
-                RegisterClass = LocalRegisterClass
-                LocalRegisterClass.RegisterObjects.pop(Reference)
-                for RegisterObject in LocalRegisterClass.RegisterObjects:
-                    if (RegisterObject.Reference == Reference):
-                          return RegisterObject.ID
+                c = 0
+                Sucsess = False
+                for Register in LocalRegisterClass.RegisterObjects:
+                    if(Register.Reference == Reference):
+                        Sucsess = True
+                        break
+                    c = c+1
+                if(Sucsess):
+                    LocalRegisterClass.RegisterObjects.pop(c)
+                return True
+        return False
 
 
 

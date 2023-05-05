@@ -22,13 +22,10 @@ class UClientWidjet(UEditClassWidjet):
         self.WTextSecondNameEdit.setText(Second_Name)
         self.WTextPassportEdit.setText(passport)
         self.WTextCommentEdit.setText(Comment)
-    def InitUI(self):
-        super().InitUI()
-        self.TableWidjetClients = QtWidgets.QTableWidget()
+    def GenerateTable(self):
         ClientsArray = NameSubsistem.GetReferencesByClass("UClient")
         self.TableWidjetClients.setRowCount(len(ClientsArray))
         self.TableWidjetClients.setColumnCount(6)
-        self.MainLayout.addWidget(self.TableWidjetClients)
         c = 0
         for x in ClientsArray:
             self.TableWidjetClients.setItem(c,0, QTableWidgetItem(x.Name))
@@ -39,6 +36,11 @@ class UClientWidjet(UEditClassWidjet):
             self.TableWidjetClients.setItem(c,5, QTableWidgetItem(str(x.ID)))
             c=c+1
         self.TableWidjetClients.setHorizontalHeaderLabels(("Name","Family","Second_Name","passport","Comment","ID"))
+    def InitUI(self):
+        super().InitUI()
+        self.TableWidjetClients = QtWidgets.QTableWidget()
+        self.MainLayout.addWidget(self.TableWidjetClients)
+        self.GenerateTable()
         self.TableWidjetClients.cellClicked.connect(self.handle_cell_clicked)
 
         GridLayout = QGridLayout()
@@ -69,24 +71,38 @@ class UClientWidjet(UEditClassWidjet):
         GridLayout.addWidget(self.WTextComment,4,0)
         GridLayout.addWidget(self.WTextCommentEdit,4,1)
     def AddNew(self):
-        Name = self.WTextNameEdit.textChanged
-        Family = self.WTextFamilyEdit.textChanged
-        Second_Name = self.WTextSecondNameEdit.textChanged
-        passport = self.WTextPassportEdit.textChanged
-        Comment = self.WTextCommentEdit.textChanged
-        Client = UClient(Name,Family,Second_Name,passport,Comment)
+        Name = self.WTextNameEdit.toPlainText()
+        Family = self.WTextFamilyEdit.toPlainText()
+        Second_Name = self.WTextSecondNameEdit.toPlainText()
+        passport = self.WTextPassportEdit.toPlainText()
+        Comment = self.WTextCommentEdit.toPlainText()
+        Client = UClient()
+        Client.Name = Name
+        Client.Family = Family
+        Client.Second_Name = Second_Name
+        Client.passport = passport
+        Client.Comment = Comment
+        self.GenerateTable()
+
+
     def Save(self):
-        Name = self.WTextNameEdit.textChanged
-        Family = self.WTextFamilyEdit.textChanged
-        Second_Name = self.WTextSecondNameEdit.textChanged
-        passport = self.WTextPassportEdit.textChanged
-        Comment = self.WTextCommentEdit.textChanged
+        Name = self.WTextNameEdit.toPlainText()
+        Family = self.WTextFamilyEdit.toPlainText()
+        Second_Name = self.WTextSecondNameEdit.toPlainText()
+        passport = self.WTextPassportEdit.toPlainText()
+        Comment = self.WTextCommentEdit.toPlainText()
         Client = NameSubsistem.GetReferenceByID("UClient",self.LastSaveID)
         Client.Name = Name
         Client.Family = Family
         Client.Second_Name = Second_Name
         Client.passport = passport
         Client.Comment = Comment
+        self.GenerateTable()
+    def Remove(self):
+        Object = NameSubsistem.GetReferenceByID("UClient",self.LastSaveID)
+        NameSubsistem.DeleteObject(Object)
+        self.GenerateTable()
+
 
 
 if __name__ == '__main__':

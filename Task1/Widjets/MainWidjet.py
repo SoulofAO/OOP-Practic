@@ -25,6 +25,7 @@ class UMainAppWidjet(QMainWindow):
     def AddButtonHandle(self):
         CurrentTab = self.MiddleTabs.currentWidget()
         CurrentTab.AddNew()
+
     def RemoveButtonHandle(self):
         CurrentTab = self.MiddleTabs.currentWidget()
         CurrentTab.Remove()
@@ -67,11 +68,11 @@ class UMainAppWidjet(QMainWindow):
         MiddelHLayout.addLayout(ButtonTaskLayout)
 
         self.PushAddButton = QPushButton("Add")
-        self.PushAddButton.clicked.connect(self.AddButtonHandle())
+        self.PushAddButton.clicked.connect(self.AddButtonHandle)
         self.PushSaveButton = QPushButton("Change")
-        self.PushSaveButton.clicked.connect(self.SaveButtonHandle())
+        self.PushSaveButton.clicked.connect(self.SaveButtonHandle)
         self.DeleteButton = QPushButton("Delete")
-        self.DeleteButton.clicked.connect(self.RemoveButtonHandle())
+        self.DeleteButton.clicked.connect(self.RemoveButtonHandle)
 
         ButtonTaskLayout.addWidget(self.PushAddButton)
         ButtonTaskLayout.addWidget(self.PushSaveButton)
