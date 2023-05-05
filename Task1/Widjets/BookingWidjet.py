@@ -7,6 +7,7 @@ from PyQt5.QtWidgets import (QWidget, QPushButton,
 from PyQt5.QtCore import pyqtSlot
 from Subsistems.ResiterSubsistem import NameSubsistem
 from Widjets.EditClassWidjet import UEditClassWidjet
+from MainClasses.Booking import UBooking
 
 
 class UBookingWidjet(UEditClassWidjet):
@@ -26,13 +27,10 @@ class UBookingWidjet(UEditClassWidjet):
         self.WTextDateOffEdit.setText(DateOff)
         self.WTextCommentEdit.setText(Comment)
 
-    def InitUI(self):
-        super().InitUI()
-        self.TableWidjetClients = QtWidgets.QTableWidget()
+    def GenerateTable(self):
         ClientsArray = NameSubsistem.GetReferencesByClass("UBooking")
         self.TableWidjetClients.setRowCount(len(ClientsArray))
         self.TableWidjetClients.setColumnCount(6)
-        self.MainLayout.addWidget(self.TableWidjetClients)
         c = 0
         for x in ClientsArray:
             ClientID = NameSubsistem.GetIDByReference(x.Client)
@@ -45,6 +43,11 @@ class UBookingWidjet(UEditClassWidjet):
             self.TableWidjetClients.setItem(c,5, QTableWidgetItem(str(x.ID)))
             c=c+1
         self.TableWidjetClients.setHorizontalHeaderLabels(("ClientID","HotelRoomID","DateOn","DateOff","Comment","ID"))
+    def InitUI(self):
+        super().InitUI()
+        self.TableWidjetClients = QtWidgets.QTableWidget()
+        self.MainLayout.addWidget(self.TableWidjetClients)
+        self.GenerateTable()
         self.TableWidjetClients.cellClicked.connect(self.handle_cell_clicked)
 
         GridLayout = QGridLayout()
@@ -74,3 +77,39 @@ class UBookingWidjet(UEditClassWidjet):
         self.WTextCommentEdit = QTextEdit()
         GridLayout.addWidget(self.WTextComment,4,0)
         GridLayout.addWidget(self.WTextCommentEdit,4,1)
+    def AddNew(self):
+        ClientID = self.WClientIDEdit.toPlainText()
+        HotelRoomID = self.WTextHotelRoomEdit.toPlainText()
+        DateOn = self.WTextDateOnEdit.toPlainText()
+        DateOff = self.WTextDateOffEdit.toPlainText()
+        Comment = self.WTextCommentEdit.toPlainText()
+        Booking = UBooking()
+        Client = NameSubsistem.GetReferenceByID("UClient",int(ClientID))
+        Booking.Client = Client
+        HotelRoom = NameSubsistem.GetReferenceByID("UHotelRoom",int(HotelRoomID))
+        Booking.HotelRoom = HotelRoom
+        Booking.DateOn = DateOn
+        Booking.DateOff = DateOff
+        Booking.Comment = Comment
+        self.GenerateTable()
+
+
+    def Save(self):
+        ClientID = self.WClientIDEdit.toPlainText()
+        HotelRoomID = self.WTextHotelRoomEdit.toPlainText()
+        DateOn = self.WTextDateOnEdit.toPlainText()
+        DateOff = self.WTextDateOffEdit.toPlainText()
+        Comment = self.WTextCommentEdit.toPlainText()
+        Booking = NameSubsistem.GetReferenceByID("UBooking",self.LastSaveID)
+        Client = NameSubsistem.GetReferenceByID("UClient",ClientID)
+        Booking.Client = Client
+        HotelRoom = NameSubsistem.GetReferenceByID("UHotelRoom",HotelRoomID)
+        Booking.HotelRoom = HotelRoom
+        Booking.DateOn = DateOn
+        Booking.DateOff = DateOff
+        Booking.Comment = Comment
+        self.GenerateTable()
+    def Remove(self):
+        Object = NameSubsistem.GetReferenceByID("UBooking",self.LastSaveID)
+        NameSubsistem.DeleteObject(Object)
+        self.GenerateTable()
