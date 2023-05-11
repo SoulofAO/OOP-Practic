@@ -8,7 +8,7 @@ from PyQt5.QtCore import pyqtSlot
 from Subsistems.ResiterSubsistem import NameSubsistem
 from Widjets.EditClassWidjet import UEditClassWidjet
 from MainClasses.HotelRoom import UHotelRoom
-
+from PyQt5 import QtWidgets, QtCore
 class URoomWidjet(UEditClassWidjet):
     def handle_cell_clicked(self, row, col):
         MaxNumber = self.TableWidjetClients.item(row,0).text()
@@ -28,7 +28,9 @@ class URoomWidjet(UEditClassWidjet):
             self.TableWidjetClients.setItem(c,0,QTableWidgetItem(str(x.MaxNumber)))
             self.TableWidjetClients.setItem(c,1, QTableWidgetItem(str(x.Comfort)))
             self.TableWidjetClients.setItem(c,2, QTableWidgetItem(str(x.Pay)))
-            self.TableWidjetClients.setItem(c,3, QTableWidgetItem(str(x.ID)))
+            SelfID = QTableWidgetItem(str(x.ID))
+            SelfID.setFlags(QtCore.Qt.ItemIsEditable)
+            self.TableWidjetClients.setItem(c, 3, SelfID)
             c=c+1
         self.TableWidjetClients.setHorizontalHeaderLabels(("MaxNumber","Comfort","Pay","ID"))
     def InitUI(self):
@@ -42,35 +44,33 @@ class URoomWidjet(UEditClassWidjet):
         self.MainLayout.addLayout(GridLayout)
 
         self.WTextMaxNumber= QLabel("MaxNumber")
-        self.WTextMaxNumberEdit = QTextEdit()
+        self.WTextMaxNumberEdit = QLineEdit()
         GridLayout.addWidget(self.WTextMaxNumber,0,0)
         GridLayout.addWidget(self.WTextMaxNumberEdit,0,1)
 
         self.WTextComfort = QLabel("Comfort")
-        self.WTextComfortEdit = QTextEdit()
+        self.WTextComfortEdit = QLineEdit()
         GridLayout.addWidget(self.WTextComfort,1,0)
         GridLayout.addWidget(self.WTextComfortEdit,1,1)
 
         WHList = QHBoxLayout()
         self.WTextPay = QLabel("Pay")
-        self.WTextPayEdit = QTextEdit()
+        self.WTextPayEdit = QLineEdit()
         GridLayout.addWidget(self.WTextPay,2,0)
         GridLayout.addWidget(self.WTextPayEdit,2,1)
     def AddNew(self):
-        MaxNumber = self.WTextMaxNumberEdit.toPlainText()
-        Comfort = self.WTextComfortEdit.toPlainText()
-        Pay = self.WTextPayEdit.toPlainText()
+        MaxNumber = self.WTextMaxNumberEdit.text()
+        Comfort = self.WTextComfortEdit.text()
+        Pay = self.WTextPayEdit.text()
         HotelRoom = UHotelRoom()
         HotelRoom.Name = MaxNumber
         HotelRoom.Comfort = Comfort
         HotelRoom.Pay = Pay
         self.GenerateTable()
-
-
     def Save(self):
-        MaxNumber = self.WTextMaxNumberEdit.toPlainText()
-        Comfort = self.WTextComfortEdit.toPlainText()
-        Pay = self.WTextPayEdit.toPlainText()
+        MaxNumber = int(self.WTextMaxNumberEdit.text())
+        Comfort = int(self.WTextComfortEdit.text())
+        Pay = int(self.WTextPayEdit.text())
         HotelRoom = NameSubsistem.GetReferenceByID("UHotelRoom",self.LastSaveID)
         HotelRoom.Name = MaxNumber
         HotelRoom.Comfort = Comfort
