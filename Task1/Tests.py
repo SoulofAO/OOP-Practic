@@ -7,7 +7,7 @@ from MainClasses.MainHotel import UHotel
 import random
 from MainClasses.Sqlite import DataBase
 from Widjets.MainWidjet import UMainAppWidjet
-
+import CherryPy.TestCherryParry
 MainHotel = UHotel()
 
 def PrintOffer(GoodHotelRoomsResult):
@@ -31,6 +31,8 @@ def PrintAllInfo():
     app = QApplication(sys.argv)
     ex = UMainAppWidjet()
     sys.exit(app.exec_())
+def CherryPyTest():
+    CherryPy.TestCherryParry.CherryExecute()
 
 def CheckDateBase():
     DataBase.SaveAll(MainHotel)

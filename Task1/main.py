@@ -15,5 +15,5 @@ import Tests as Tests
 
 
 if __name__ == '__main__':
-    Tests.PrintAllInfo()
+    Tests.CherryPyTest()
 
