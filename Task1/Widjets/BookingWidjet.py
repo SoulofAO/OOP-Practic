@@ -35,11 +35,11 @@ class UBookingWidjet(UEditClassWidjet):
             self.ArrayClients.append(x.ID)
 
     def on_combo_box_changed(self,index):
-        selected_item = self.SelectClientComboBox.currentText()
-        self.WClientIDEdit.setText(str(self.ArrayClients[index]))
-
-    def on_combo_box_activated(self):
-        self.GenerateSelectComboBox()
+        try:
+            selected_item = self.SelectClientComboBox.currentText()
+            self.WClientIDEdit.setText(str(self.ArrayClients[index]))
+        except:
+            print("BUG")
     def GenerateTable(self):
         ClientsArray = NameSubsistem.GetReferencesByClass("UBooking")
         self.TableWidjetClients.setRowCount(len(ClientsArray))
@@ -78,7 +78,6 @@ class UBookingWidjet(UEditClassWidjet):
         GridLayout.addWidget(self.WClientIDEdit,0,1)
         self.SelectClientComboBox = QtWidgets.QComboBox()
         self.GenerateSelectComboBox()
-        self.SelectClientComboBox.activated.connect(self.on_combo_box_activated)
         self.SelectClientComboBox.currentIndexChanged.connect(self.on_combo_box_changed)
         GridLayout.addWidget(self.SelectClientComboBox, 0, 2)
 

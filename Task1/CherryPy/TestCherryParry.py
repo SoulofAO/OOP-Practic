@@ -72,22 +72,53 @@ class ClientsAdd:
                     <p><a href="/clients">Go back</a></p>
         """
         s = s + "<table>"
-        s = s + """ <tr>
-                <th>Name</th>
-                <th>Family</th>
-                <th>Second_Name</th>
-                <th>Passport</th>
-                <th>Comment</th>
-                  </tr>"""
         s = s + '''
                  <tr>
+                 <tr>
                  <form method="post" action="submit">
+                 <th>
+                 Name
+                 </th>
+                 <th>
                  <input type="Name" name="Name" />
+                 </th>
+                 </tr>
+                 <tr>
+                 <th>
+                 Family
+                 </th>
+                 <th>
                  <input type="Family" name="Family" />
+                 </th>
+                 </tr>
+                 <tr>
+                 <th>
+                 Second_Name
+                 </th>
+                 <th>
                  <input type="SecondName" name="SecondName" />
+                 </th>
+                 </tr>
+                 <tr>
+                 <th>
+                 Passport
+                 </th>
+                 <th>
                  <input type="Passport" name="Passport" />
+                 </th>
+                 </tr>
+                 <tr>
+                 <th>
+                 Comment
+                 </th>
+                 <th>
                  <input type="Comment" name="Comment" />
+                 </th>
+                 </tr>
+                 <tr>
+                 <th>
                  <input type="submit" value="Submit" />
+                 </th>
                  </tr>'''
         s = s + """                </body>
             </html>"""
@@ -210,23 +241,55 @@ class BookingsAdd:
                     <h1>Bookings</h1>
                     <p><a href="/bookings">Go back</a></p>
         """
-        s = s + "<table>"
-        s = s + """ <tr>
-                <th>Client</th>
-                <th>HotelRoom</th>
-                <th>DateOn</th>
-                <th>DateOff</th>
-                <th>Comment</th>
-                  </tr>"""
+        s = s + '''
+                "<table>"'''
         s = s + '''
                  <tr>
+                 <tr>
                  <form method="post" action="submit">
-                 <input type="text" name="Client" />
-                 <input type="text" name="HotelRoom" />
+                 <th>
+                 Client ID
+                 </th>
+                 <th>
+                 <input type="number" name="Client"/>
+                 </th>
+                 </tr>
+                 <tr>
+                 <th>
+                 HotelRoom ID
+                 </th>
+                 <th>
+                 <input type="number" name="HotelRoom"/>
+                 </th>
+                 </tr>
+                 <tr>
+                 <th>
+                 DateOn
+                 </th>
+                 <th>
                  <input type="text" name="DateOn" />
+                 </th>
+                 </tr>
+                 <tr>
+                 <th>
+                 DateOff
+                 </th>
+                 <th>
                  <input type="text" name="DateOff" />
+                 </th>
+                 </tr>
+                 <tr>
+                 <th>
+                 Comment
+                 </th>
+                 <th>
                  <input type="text" name="Comment" />
+                 </th>
+                 </tr>
+                 <tr>
+                 <th>
                  <input type="submit" value="Submit" />
+                 </th>
                  </tr>'''
         s = s + """                </body>
             </html>"""
@@ -337,25 +400,44 @@ class HotelAdd:
         s = """
             <html>
                 <head>
-                    <title>Hotels</title>
+                    <title>HotelRooms</title>
                 </head>
                 <body>
-                    <h1>Hotels</h1>
+                    <h1>HotelRooms</h1>
                     <p><a href="/hotel_rooms">Go back</a></p>
         """
         s = s + "<table>"
-        s = s + """ <tr>
-                <th>MaxNumber</th>
-                <th>Comfort</th>
-                <th>Pay</th>
-                  </tr>"""
         s = s + '''
                  <tr>
+                 <tr>
                  <form method="post" action="submit">
-                 <input type="text" name="MaxNumber" />
-                 <input type="text" name="Comfort" />
-                 <input type="text" name="Pay" />
+                 <th>
+                 MaxNumber
+                 </th>
+                 <th>
+                 <input type="number" name="MaxNumber" />
+                 </th>
+                 </tr>
+                 <tr>
+                 <th>
+                 Comfort
+                 </th>
+                 <th>
+                 <input type="number" name="Comfort" />
+                 </th>
+                 </tr>
+                 <tr>
+                 <th>
+                 Pay
+                 </th>
+                 <th>
+                 <input type="number" name="Pay" />
+                 </th>
+                 </tr>
+                 <tr>
+                 <th>
                  <input type="submit" value="Submit" />
+                 </th>
                  </tr>'''
         s = s + """                </body>
             </html>"""
@@ -384,10 +466,10 @@ class HotelRemove:
         s = """
             <html>
                 <head>
-                    <title>HotelRoomsRemove</title>
+                    <title>HotelRooms</title>
                 </head>
                 <body>
-                    <h1>Clients</h1>
+                    <h1>HotelRooms</h1>
                     <p><a href="/hotel_rooms">Go back</a></p>
         """
         s = s + "<table>"
